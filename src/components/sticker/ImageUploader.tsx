@@ -91,7 +91,7 @@ export function ImageUploader({ onImageUploaded, disabled }: ImageUploaderProps)
         <div className="text-center">
           <h3 className="text-lg font-semibold mb-2">上传照片</h3>
           <p className="text-sm text-muted-foreground">
-            支持 JPG、PNG、WEBP 格式，最大 1MB
+            支持 JPG、PNG、WEBP 格式，最大 5MB
           </p>
         </div>
 

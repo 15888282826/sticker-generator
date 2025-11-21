@@ -1,6 +1,6 @@
 // 图片压缩工具函数
 
-const MAX_FILE_SIZE = 1024 * 1024; // 1MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const MAX_WIDTH = 1920;
 const MAX_HEIGHT = 1080;
 const INITIAL_QUALITY = 0.8;
