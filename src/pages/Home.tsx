@@ -25,7 +25,7 @@ export default function Home() {
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
 
-            <h1 className="text-4xl font-bold text-foreground">表情包生成器（恶搞版）</h1>
+            <h1 className="font-bold text-foreground text-[32px]">表情包生成器（恶搞版）</h1>
           </div>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">上传人物或宠物照片，AI自动生成手绘风格的微信表情包（基于Nano Banana Pro）</p>
         </div>
