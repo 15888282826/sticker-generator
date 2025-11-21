@@ -24,12 +24,8 @@ export default function Home() {
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="p-3 bg-gradient-primary rounded-2xl shadow-glow">
-              <Smile className="h-8 w-8 text-primary-foreground" />
-            </div>
-            <h1 className="text-4xl font-bold text-foreground">
-              表情包生成器
-            </h1>
+
+            <h1 className="text-4xl font-bold text-foreground">表情包生成器（恶搞版）</h1>
           </div>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             上传人物或宠物照片，AI自动生成手绘风格的微信表情包
