@@ -34,7 +34,7 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
       const record = await createSticker({
         user_id: userId,
         original_image_url: originalImageUrl,
-        prompt: 'Turn the people or pets in your photos into fun hand-drawn WeChat stickers...'
+        prompt: 'Turn the people or pets in your photos into fun hand-drawn WeChat stickers. Style: Minimalist ugly-cute line drawing (doodle style). White background. Expression: Exaggerate the animal\'s expression to look extremely shocked/judgemental/lazy (based on photo). Accessories: Add cute little doodles like sweat drops, question marks, or sparkles around the head. Text: Add handwritten Chinese text at the bottom: \'[搞快点 / 累了 / 暗中观察 / 咬牙切齿 / 哈哈哈哈哈 / 是心动的感觉 / 要命 / 比心 / 土狗贴贴 / 一切随缘]\'. Ensure the text style is messy and funny.'
       });
 
       const generatedBase64 = await generateSticker({
