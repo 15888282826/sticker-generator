@@ -1,7 +1,7 @@
 import { supabase } from './supabase';
 import type { Sticker, StickerInsert, StickerUpdate } from '@/types/types';
 
-const BUCKET_NAME = 'app-8uqvqoz8ynls_stickers_images';
+const BUCKET_NAME = 'app-7pk47kageyv5_stickers_images';
 
 // 获取或创建匿名用户ID
 export function getOrCreateUserId(): string {
