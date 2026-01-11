@@ -61,7 +61,48 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
   };
 
   const handleGenerate = async () => {
-    const finalPrompt = optimizedPromptText || 'Turn the people or pets in your photos into fun hand-drawn WeChat stickers. Style: Minimalist ugly-cute line drawing (doodle style). White background. Expression: Exaggerate the animal\'s expression to look extremely shocked/judgemental/lazy (based on photo). Accessories: Add cute little doodles like sweat drops, question marks, or sparkles around the head. Text: Add handwritten Chinese text at the bottom: \'[搞快点 / 累了 / 暗中观察 / 咬牙切齿 / 哈哈哈哈哈 / 是心动的感觉 / 要命 / 比心 / 土狗贴贴 / 一切随缘]\'. Ensure the text style is messy and funny.';
+    // 如果用户输入了描述但还没有优化，先自动优化
+    if (description.trim() && !optimizedPromptText) {
+      toast({
+        title: '正在优化提示词',
+        description: 'AI正在根据您的描述优化提示词...'
+      });
+      
+      try {
+        setOptimizing(true);
+        const optimized = await optimizePrompt(description);
+        setOptimizedPromptText(optimized);
+        
+        toast({
+          title: '优化完成',
+          description: '即将开始生成表情包'
+        });
+        
+        // 等待一下让用户看到优化结果
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // 使用优化后的提示词继续生成
+        await generateWithPrompt(optimized);
+      } catch (error) {
+        console.error('优化失败:', error);
+        toast({
+          title: '优化失败',
+          description: '将使用默认提示词生成',
+          variant: 'destructive'
+        });
+        // 优化失败，使用默认提示词
+        await generateWithPrompt(null);
+      } finally {
+        setOptimizing(false);
+      }
+    } else {
+      // 已经有优化后的提示词，或者没有输入描述，直接生成
+      await generateWithPrompt(optimizedPromptText);
+    }
+  };
+
+  const generateWithPrompt = async (promptText: string | null) => {
+    const finalPrompt = promptText || 'Turn the people or pets in your photos into fun hand-drawn WeChat stickers. Style: Minimalist ugly-cute line drawing (doodle style). White background. Expression: Exaggerate the animal\'s expression to look extremely shocked/judgemental/lazy (based on photo). Accessories: Add cute little doodles like sweat drops, question marks, or sparkles around the head. Text: Add handwritten Chinese text at the bottom: \'[搞快点 / 累了 / 暗中观察 / 咬牙切齿 / 哈哈哈哈哈 / 是心动的感觉 / 要命 / 比心 / 土狗贴贴 / 一切随缘]\'. Ensure the text style is messy and funny.';
 
     try {
       setGenerating(true);
@@ -79,7 +120,7 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
         original_image_url: originalImageUrl,
         prompt: finalPrompt,
         user_description: description || null,
-        optimized_prompt: optimizedPromptText || null
+        optimized_prompt: promptText || null
       });
 
       const generatedBase64 = await generateSticker({
@@ -154,6 +195,11 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
             <p>💡 <strong>风格说明</strong>：极简丑萌线条画，纯白背景，搞怪趣味</p>
             <p>📝 <strong>文字处理</strong>：输入的文字会添加到表情包中（手写体、凌乱风格）</p>
             <p>😄 <strong>表情强化</strong>：AI会自动识别情绪并夸张化（震惊/批判/懒惰）</p>
+            {description.trim() && !optimizedPromptText && (
+              <p className="text-primary font-semibold">
+                ⚡ 提示：点击"生成表情包"时会自动优化您的描述
+              </p>
+            )}
           </div>
           <div className="flex gap-2">
             <Button
@@ -171,7 +217,7 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
               ) : (
                 <>
                   <Wand2 className="mr-2 h-4 w-4" />
-                  AI优化提示词
+                  AI优化提示词（可选）
                 </>
               )}
             </Button>
