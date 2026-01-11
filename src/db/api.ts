@@ -31,6 +31,28 @@ export async function uploadImage(file: File, path: string): Promise<string> {
   return urlData.publicUrl;
 }
 
+// 优化提示词
+export async function optimizePrompt(description: string): Promise<string> {
+  const { data, error } = await supabase.functions.invoke('optimize-prompt', {
+    body: JSON.stringify({ description }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (error) {
+    const errorMsg = await error?.context?.text();
+    console.error('Edge function error in <optimize-prompt>:', errorMsg || error?.message);
+    throw new Error(errorMsg || error?.message || '提示词优化失败');
+  }
+
+  if (!data?.success || !data?.optimizedPrompt) {
+    throw new Error('未能获取优化后的提示词');
+  }
+
+  return data.optimizedPrompt;
+}
+
 // 创建表情包记录
 export async function createSticker(sticker: StickerInsert): Promise<Sticker | null> {
   const { data, error } = await supabase

@@ -6,6 +6,8 @@ export interface Sticker {
   original_image_url: string;
   generated_image_url: string | null;
   prompt: string;
+  user_description: string | null;
+  optimized_prompt: string | null;
   created_at: string;
 }
 
@@ -14,8 +16,11 @@ export interface StickerInsert {
   original_image_url: string;
   generated_image_url?: string | null;
   prompt: string;
+  user_description?: string | null;
+  optimized_prompt?: string | null;
 }
 
 export interface StickerUpdate {
   generated_image_url?: string;
+  optimized_prompt?: string;
 }
