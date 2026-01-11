@@ -135,7 +135,7 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
         <div className="text-center">
           <h3 className="text-lg font-semibold mb-2">生成表情包</h3>
           <p className="text-sm text-muted-foreground">
-            描述图片内容，AI将优化提示词并生成表情包
+            描述图片内容和想要的文字，AI将优化提示词并生成表情包
           </p>
         </div>
 
@@ -144,12 +144,15 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
           <Label htmlFor="description">图片描述（可选）</Label>
           <Textarea
             id="description"
-            placeholder="例如：一只可爱的橙色猫咪、我的宠物狗、朋友的搞笑照片..."
+            placeholder="例如：搞快点啊，怎么还没发货呢&#10;或：一只可爱的橙色猫咪&#10;或：我的宠物狗，看起来很无奈"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             disabled={generating || optimizing}
-            className="min-h-[80px]"
+            className="min-h-[100px]"
           />
+          <p className="text-xs text-muted-foreground">
+            💡 提示：输入的文字内容会被添加到表情包图片中
+          </p>
           <div className="flex gap-2">
             <Button
               onClick={handleOptimizePrompt}
