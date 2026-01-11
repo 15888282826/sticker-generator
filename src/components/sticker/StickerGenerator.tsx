@@ -133,9 +133,9 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
     <Card className="p-6">
       <div className="space-y-4">
         <div className="text-center">
-          <h3 className="text-lg font-semibold mb-2">生成表情包</h3>
+          <h3 className="text-lg font-semibold mb-2">生成恶搞表情包</h3>
           <p className="text-sm text-muted-foreground">
-            描述图片内容和想要的文字，AI将优化提示词并生成表情包
+            描述图片内容或输入想要的文字，AI将生成丑萌风格表情包
           </p>
         </div>
 
@@ -144,15 +144,17 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
           <Label htmlFor="description">图片描述（可选）</Label>
           <Textarea
             id="description"
-            placeholder="例如：搞快点啊，怎么还没发货呢&#10;或：一只可爱的橙色猫咪&#10;或：我的宠物狗，看起来很无奈"
+            placeholder="示例1：搞快点啊，怎么还没发货呢&#10;示例2：一只可爱的猫咪正在睡觉&#10;示例3：一只狗狗在翻白眼瞪人"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             disabled={generating || optimizing}
             className="min-h-[100px]"
           />
-          <p className="text-xs text-muted-foreground">
-            💡 提示：输入的文字内容会被添加到表情包图片中
-          </p>
+          <div className="text-xs text-muted-foreground space-y-1">
+            <p>💡 <strong>风格说明</strong>：极简丑萌线条画，纯白背景，搞怪趣味</p>
+            <p>📝 <strong>文字处理</strong>：输入的文字会添加到表情包中（手写体、凌乱风格）</p>
+            <p>😄 <strong>表情强化</strong>：AI会自动识别情绪并夸张化（震惊/批判/懒惰）</p>
+          </div>
           <div className="flex gap-2">
             <Button
               onClick={handleOptimizePrompt}
@@ -164,7 +166,7 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
               {optimizing ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  优化中...
+                  AI优化中...
                 </>
               ) : (
                 <>
@@ -179,8 +181,8 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
         {/* 优化后的提示词显示 */}
         {optimizedPromptText && (
           <div className="space-y-2">
-            <Label>优化后的提示词</Label>
-            <div className="p-3 bg-muted rounded-lg text-sm">
+            <Label>优化后的提示词（英文）</Label>
+            <div className="p-3 bg-muted rounded-lg text-sm max-h-32 overflow-y-auto">
               {optimizedPromptText}
             </div>
           </div>
