@@ -14,6 +14,7 @@
   - [x] 部署Edge Function
   - [x] 更新数据库schema添加描述字段
   - [x] 修改StickerGenerator组件添加描述输入和优化功能
+  - [x] 修复Edge Function流式响应解析问题
   - [x] 运行lint检查
 
 ## 注意事项
@@ -22,3 +23,4 @@
 - 使用UUID匿名用户系统（不需要登录）
 - 配色：主色#FF8C42（橙色），辅色#7FDBCA（薄荷绿）
 - 新增：使用文心大模型API优化用户输入的图片描述为专业提示词
+- 文心大模型API返回流式响应（SSE格式），需要在Edge Function中正确解析

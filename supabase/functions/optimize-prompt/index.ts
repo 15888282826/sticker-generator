@@ -49,12 +49,40 @@ Deno.serve(async (req) => {
       throw new Error(`API请求失败: ${response.status}`);
     }
 
-    const data = await response.json();
-    
-    // 提取生成的提示词
-    const optimizedPrompt = data.choices?.[0]?.delta?.content || data.choices?.[0]?.message?.content || '';
+    // 处理流式响应
+    const reader = response.body?.getReader();
+    if (!reader) {
+      throw new Error('无法读取响应流');
+    }
 
-    if (!optimizedPrompt) {
+    const decoder = new TextDecoder();
+    let optimizedPrompt = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      const chunk = decoder.decode(value, { stream: true });
+      const lines = chunk.split('\n');
+
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          const data = line.slice(6).trim();
+          if (data === '[DONE]') continue;
+          
+          try {
+            const parsed = JSON.parse(data);
+            const content = parsed.choices?.[0]?.delta?.content || '';
+            optimizedPrompt += content;
+          } catch (e) {
+            // 忽略解析错误
+            console.log('解析行失败:', line);
+          }
+        }
+      }
+    }
+
+    if (!optimizedPrompt.trim()) {
       throw new Error('未能生成优化后的提示词');
     }
 
