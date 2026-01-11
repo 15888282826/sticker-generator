@@ -15,13 +15,9 @@
 - 用户可为上传的图片添加描述文本
 - 示例描述：一只可爱的猫咪正在睡觉、一个小朋友做出惊讶的表情、宠物狗歪着头好奇地看着镜头
 
-### 2.3 AI表情包生成功能
-- 使用Nano Banana Pro图片生成与编辑技术
-- 生成参数：\n  - 风格：极简丑萌线条画（涂鸦风格），白色背景
-  - 表情：放大动物表情，呈现极度震惊/批判/懒惰情绪（基于原照片表情和图片描述）\n  - 配饰：头部周围添加可爱涂鸦，如汗滴、问号、闪光点
-  - 文字：底部添加手写字体中文文字：「搞快点 / 累了 / 暗中观察」，确保文字风格凌乱有趣
-  - AI提示词优化：结合用户上传的图片和提供的图片描述，动态调整生成参数，使表情包更贴合用户意图
-  - 优化后的提示词示例：\n    - 用户上传猫咪照片并描述“一只可爱的猫咪正在睡觉”时：Turn the sleeping cat photo into a fun hand-drawn WeChat sticker. Style: Minimalist ugly-cute line drawing (doodle style). White background. Expression: Exaggerate the cat's sleeping expression to look extremely lazy. Accessories: Add cute little doodles like sweat drops, question marks, or sparkles around the head. Text: Add handwritten Chinese text at the bottom: '[搞快点 / 累了 / 暗中观察]'. Ensure the text style is messy and funny.\n    - 用户上传小朋友照片并描述“一个小朋友做出惊讶的表情”时：Turn the photo of the surprised child into a fun hand-drawn WeChat sticker. Style: Minimalist ugly-cute line drawing (doodle style). White background. Expression: Exaggerate the child's surprised expression to look extremely shocked. Accessories: Add cute little doodles like sweat drops, question marks, or sparkles around the head. Text: Add handwritten Chinese text at the bottom: '[搞快点 / 累了 / 暗中观察]'. Ensure the text style is messy and funny.\n
+### 2.3 AI表情包生成功能（恶搞催货Pro版）\n使用Nano Banana Pro图片生成与编辑技术，专为“急急国王”量身打造的恶搞催货表情包。\n
+生成参数：\n
+风格： 极简丑萌线条画（涂鸦风格），白色背景，突出粗糙的手绘质感。\n表情： 放大原片主体的面部特征，呈现极度震惊、崩溃、咆哮或生无可恋的情绪。重点表现“怎么还没好/怎么还没到”的难以置信与焦急感。\n配饰： 头部周围添加强化紧迫感的涂鸦元素，如巨大的汗滴、爆炸符号、密集的问号以及代表时间的时钟/闪电。\n文字： 底部添加手写字体中文文字，文案池包含：「怎么还没好 / 怎么还没到货 / 什么时候到货 / 快点啊 / 抓紧 / 我要马上到！」。确保文字风格潦草凌乱，带有急促的视觉冲击力。\nAI提示词优化：\n结合用户上传的图片和提供的图片描述，动态调整生成参数，精准捕捉“等货等到心急火燎”的意图，使生成的恶搞表情包更具代入感和吐槽力。\n
 ### 2.4 表情包下载功能
 - 支持用户下载生成的表情包
 - 支持微信表情包格式

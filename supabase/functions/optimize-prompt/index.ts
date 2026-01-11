@@ -34,48 +34,50 @@ Deno.serve(async (req) => {
           messages: [
             {
               role: 'system',
-              content: `你是一个专业的AI恶搞表情包提示词优化专家。你的任务是根据用户描述生成符合以下规范的英文提示词：
+              content: `你是一个专业的AI恶搞催货表情包提示词优化专家。你的任务是根据用户描述生成符合"急急国王"催货主题的英文提示词：
 
-【核心规范】
-1. 整体风格：极简丑萌线条画（涂鸦风格），纯白色背景，线条粗糙随性
-2. 表情处理：识别主体（动物/人物/物品），根据描述放大表情特征，强化「极度震惊」「犀利批判」「摆烂懒惰」三类核心情绪
-3. 配饰添加：在主体头部周围随机添加1-2个可爱涂鸦元素（汗滴、问号、小星星、闪光、黑线、小云朵等）
+【核心规范 - 恶搞催货Pro版】
+1. 整体风格：极简丑萌线条画（涂鸦风格），白色背景，突出粗糙的手绘质感
+2. 表情处理：放大原片主体的面部特征，呈现「极度震惊」「崩溃」「咆哮」或「生无可恋」的情绪。重点表现"怎么还没好/怎么还没到"的难以置信与焦急感
+3. 配饰添加：头部周围添加强化紧迫感的涂鸦元素，如巨大的汗滴、爆炸符号、密集的问号以及代表时间的时钟/闪电
 4. 文字配置：
-   - 如果用户描述中包含具体文字内容，使用用户提供的文字
-   - 如果没有，从固定文案池随机选一个：「搞快点」「累了」「暗中观察」
+   - 如果用户描述中包含催货相关文字，使用用户提供的文字
+   - 如果没有，从催货文案池随机选一个：「怎么还没好」「怎么还没到货」「什么时候到货」「快点啊」「抓紧」「我要马上到！」
    - 文字位置：底部居中，占比不超过整体高度的1/5
-   - 文字风格：手写体、笔触凌乱歪斜、略带飞白效果
+   - 文字风格：潦草凌乱的手写体，带有急促的视觉冲击力
 
-【情绪关键词映射】
-- 睡觉/困/累 → extremely lazy（摆烂懒惰）
-- 惊讶/震惊/吓到 → extremely shocked（极度震惊）
-- 翻白眼/瞪人/鄙视/无语 → sharply critical（犀利批判）
+【情绪关键词映射 - 催货场景】
+- 等待/着急/催促/快点 → extremely shocked and anxious（极度震惊焦急）
+- 崩溃/抓狂/受不了 → completely broken down（完全崩溃）
+- 无语/无奈/生无可恋 → utterly hopeless（生无可恋）
+- 咆哮/发火/爆发 → furiously roaring（愤怒咆哮）
 
 【输出要求】
 - 必须使用英文输出提示词
 - 直接输出提示词，不要有任何前缀或解释
-- 提示词长度控制在200词以内`
+- 提示词长度控制在200词以内
+- 必须体现"等货等到心急火燎"的催货主题`
             },
             {
               role: 'user',
               content: `用户描述：${description}
 
-请生成符合规范的英文提示词。
+请生成符合催货主题的英文提示词。
 
 参考模板：
-Turn the [主体描述] in the uploaded photo into a hilarious hand-drawn meme sticker. Style: Minimalist ugly-cute line drawing (doodle style) with a pure white background, rough and casual lines. Expression: Exaggerate the [主体]'s [基础表情] expression to look **[情绪强化]**, with [具体表情细节]. Accessories: Add 1-2 cute doodles randomly around the [主体]'s head, such as [配饰列表]. Text: Add handwritten Chinese text "[用户文字或随机文案]" at the bottom center of the sticker; the text style must be messy, crooked, and funny, accounting for no more than 1/5 of the total height of the sticker.
+Turn the [主体描述] in the uploaded photo into a hilarious hand-drawn urgent delivery meme sticker. Style: Minimalist ugly-cute line drawing (doodle style) with a white background, rough hand-drawn texture. Expression: Exaggerate the [主体]'s facial features to show **[催货情绪]**, with [具体表情细节] conveying the "why isn't it here yet" disbelief and anxiety. Accessories: Add urgency-enhancing doodles around the [主体]'s head, such as [催货配饰]. Text: Add handwritten Chinese text "[催货文案]" at the bottom center; the text style must be messy, hasty, and visually impactful, accounting for no more than 1/5 of the total height.
 
 示例1：
-输入："一只可爱的猫咪正在睡觉"
-输出：Turn the sleeping cat in the uploaded photo into a hilarious hand-drawn meme sticker. Style: Minimalist ugly-cute line drawing (doodle style) with a pure white background, rough and casual lines. Expression: Exaggerate the cat's drowsy expression to look **extremely lazy**, with half-closed eyes and a slack mouth. Accessories: Add 1-2 cute doodles randomly around the cat's head, such as sweat drops or small clouds. Text: Add one random handwritten Chinese text from ["搞快点", "累了", "暗中观察"] at the bottom center of the sticker; the text style must be messy, crooked, and funny, accounting for no more than 1/5 of the total height of the sticker.
+输入："怎么还没到货啊"
+输出：Turn the person or pet in the uploaded photo into a hilarious hand-drawn urgent delivery meme sticker. Style: Minimalist ugly-cute line drawing (doodle style) with a white background, rough hand-drawn texture. Expression: Exaggerate the subject's facial features to show **extreme shock and anxiety**, with wide-open eyes, raised eyebrows, and an open mouth conveying the "why isn't it here yet" disbelief and impatience. Accessories: Add urgency-enhancing doodles around the subject's head, such as giant sweat drops, explosion symbols, dense question marks, and clocks or lightning bolts representing time pressure. Text: Add handwritten Chinese text "怎么还没到货啊" at the bottom center; the text style must be messy, hasty, and visually impactful, accounting for no more than 1/5 of the total height.
 
 示例2：
-输入："搞快点啊，怎么还没发货呢"
-输出：Turn the person or pet in the uploaded photo into a hilarious hand-drawn meme sticker. Style: Minimalist ugly-cute line drawing (doodle style) with a pure white background, rough and casual lines. Expression: Exaggerate the subject's anxious and impatient expression to look **extremely shocked**, with wide-open eyes and a tense mouth. Accessories: Add 1-2 cute doodles randomly around the subject's head, such as sweat drops or question marks. Text: Add handwritten Chinese text "搞快点啊，怎么还没发货呢" at the bottom center of the sticker; the text style must be messy, crooked, and funny, accounting for no more than 1/5 of the total height of the sticker.
+输入："一只猫咪等待的样子"
+输出：Turn the waiting cat in the uploaded photo into a hilarious hand-drawn urgent delivery meme sticker. Style: Minimalist ugly-cute line drawing (doodle style) with a white background, rough hand-drawn texture. Expression: Exaggerate the cat's facial features to show **utter hopelessness and impatience**, with half-closed eyes, drooping whiskers, and a slack mouth conveying the "when will it arrive" desperation. Accessories: Add urgency-enhancing doodles around the cat's head, such as giant sweat drops, multiple question marks, and clock symbols. Text: Add one random handwritten Chinese text from ["怎么还没好", "怎么还没到货", "什么时候到货", "快点啊", "抓紧", "我要马上到！"] at the bottom center; the text style must be messy, hasty, and visually impactful, accounting for no more than 1/5 of the total height.
 
 示例3：
-输入："一只狗狗在翻白眼瞪人"
-输出：Turn the dog rolling its eyes and staring in the uploaded photo into a hilarious hand-drawn meme sticker. Style: Minimalist ugly-cute line drawing (doodle style) with a pure white background, rough and casual lines. Expression: Exaggerate the dog's eye-rolling expression to look **sharply critical**, with squinted eyes and a furrowed brow. Accessories: Add 1-2 cute doodles randomly around the dog's head, such as black lines or small stars. Text: Add one random handwritten Chinese text from ["搞快点", "累了", "暗中观察"] at the bottom center of the sticker; the text style must be messy, crooked, and funny, accounting for no more than 1/5 of the total height of the sticker.`
+输入："快点啊，我等不及了"
+输出：Turn the person or pet in the uploaded photo into a hilarious hand-drawn urgent delivery meme sticker. Style: Minimalist ugly-cute line drawing (doodle style) with a white background, rough hand-drawn texture. Expression: Exaggerate the subject's facial features to show **furious roaring and complete breakdown**, with bulging eyes, furrowed brows, and a wide-open mouth conveying the "hurry up already" explosive impatience. Accessories: Add urgency-enhancing doodles around the subject's head, such as explosion symbols, lightning bolts, dense sweat drops, and multiple exclamation marks. Text: Add handwritten Chinese text "快点啊，我等不及了" at the bottom center; the text style must be messy, hasty, and visually impactful, accounting for no more than 1/5 of the total height.`
             }
           ]
         })

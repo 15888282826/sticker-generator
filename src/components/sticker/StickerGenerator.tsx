@@ -102,7 +102,7 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
   };
 
   const generateWithPrompt = async (promptText: string | null) => {
-    const finalPrompt = promptText || 'Turn the people or pets in your photos into fun hand-drawn WeChat stickers. Style: Minimalist ugly-cute line drawing (doodle style). White background. Expression: Exaggerate the animal\'s expression to look extremely shocked/judgemental/lazy (based on photo). Accessories: Add cute little doodles like sweat drops, question marks, or sparkles around the head. Text: Add handwritten Chinese text at the bottom: \'[搞快点 / 累了 / 暗中观察 / 咬牙切齿 / 哈哈哈哈哈 / 是心动的感觉 / 要命 / 比心 / 土狗贴贴 / 一切随缘]\'. Ensure the text style is messy and funny.';
+    const finalPrompt = promptText || 'Turn the person or pet in the uploaded photo into a hilarious hand-drawn urgent delivery meme sticker. Style: Minimalist ugly-cute line drawing (doodle style) with a white background, rough hand-drawn texture. Expression: Exaggerate the subject\'s facial features to show extreme shock and anxiety, with wide-open eyes and an open mouth conveying the "why isn\'t it here yet" disbelief and impatience. Accessories: Add urgency-enhancing doodles around the subject\'s head, such as giant sweat drops, explosion symbols, dense question marks, and clocks or lightning bolts. Text: Add one random handwritten Chinese text from ["怎么还没好", "怎么还没到货", "什么时候到货", "快点啊", "抓紧", "我要马上到！"] at the bottom center; the text style must be messy, hasty, and visually impactful, accounting for no more than 1/5 of the total height.';
 
     try {
       setGenerating(true);
@@ -174,27 +174,28 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
     <Card className="p-6">
       <div className="space-y-4">
         <div className="text-center">
-          <h3 className="text-lg font-semibold mb-2">生成恶搞表情包</h3>
+          <h3 className="text-lg font-semibold mb-2">生成催货表情包 🔥</h3>
           <p className="text-sm text-muted-foreground">
-            描述图片内容或输入想要的文字，AI将生成丑萌风格表情包
+            专为"急急国王"打造，表达"等货等到心急火燎"的催货神器
           </p>
         </div>
 
         {/* 图片描述输入区域 */}
         <div className="space-y-2">
-          <Label htmlFor="description">图片描述（可选）</Label>
+          <Label htmlFor="description">催货描述（可选）</Label>
           <Textarea
             id="description"
-            placeholder="示例1：搞快点啊，怎么还没发货呢&#10;示例2：一只可爱的猫咪正在睡觉&#10;示例3：一只狗狗在翻白眼瞪人"
+            placeholder="示例1：怎么还没到货啊&#10;示例2：快点啊，我等不及了&#10;示例3：什么时候到货"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             disabled={generating || optimizing}
             className="min-h-[100px]"
           />
           <div className="text-xs text-muted-foreground space-y-1">
-            <p>💡 <strong>风格说明</strong>：极简丑萌线条画，纯白背景，搞怪趣味</p>
-            <p>📝 <strong>文字处理</strong>：输入的文字会添加到表情包中（手写体、凌乱风格）</p>
-            <p>😄 <strong>表情强化</strong>：AI会自动识别情绪并夸张化（震惊/批判/懒惰）</p>
+            <p>💡 <strong>催货风格</strong>：极简丑萌线条画，白色背景，粗糙手绘质感</p>
+            <p>😱 <strong>情绪强化</strong>：极度震惊、崩溃、咆哮或生无可恋，表现"怎么还没到"的焦急感</p>
+            <p>⚡ <strong>紧迫配饰</strong>：巨大汗滴、爆炸符号、密集问号、时钟/闪电</p>
+            <p>📝 <strong>催货文案</strong>：怎么还没好/怎么还没到货/什么时候到货/快点啊/抓紧/我要马上到！</p>
             {description.trim() && !optimizedPromptText && (
               <p className="text-primary font-semibold">
                 ⚡ 提示：点击"生成表情包"时会自动优化您的描述

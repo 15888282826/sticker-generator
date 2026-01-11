@@ -24,10 +24,12 @@ export default function Home() {
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
-
-            <h1 className="font-bold text-foreground text-[32px]">催货表情包生成器（恶搞版）</h1>
+            <Smile className="w-10 h-10 text-primary" />
+            <h1 className="font-bold text-foreground text-[32px]">催货表情包生成器 🔥</h1>
           </div>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">上传人物或宠物照片，AI自动生成手绘风格的微信表情包</p>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            专为"急急国王"打造！上传照片，AI生成"等货等到心急火燎"的催货表情包
+          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
