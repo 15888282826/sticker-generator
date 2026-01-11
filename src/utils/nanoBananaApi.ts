@@ -1,6 +1,6 @@
 // Nano Banana API 调用工具
 
-const API_URL = 'https://api-integrations.appmiaoda.com/app-7pk47kageyv5/api-Xa6JZ58oPMEa/v1beta/models/gemini-3-pro-image-preview:generateContent';
+const API_URL = 'https://api-integrations.appmiaoda.com/app-8uqvqoz8ynls/api-Xa6JZ58oPMEa/v1beta/models/gemini-3-pro-image-preview:generateContent';
 const APP_ID = import.meta.env.VITE_APP_ID;
 const TIMEOUT = 300000; // 300秒超时
 
