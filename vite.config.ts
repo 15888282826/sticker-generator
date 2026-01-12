@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import path from 'path';
@@ -16,8 +16,12 @@ export default defineConfig(({ mode }) => {
 
   // Only use miaoda dev plugin in development mode
   if (mode === 'development') {
-    const { miaodaDevPlugin } = require("miaoda-sc-plugin");
-    plugins.push(miaodaDevPlugin());
+    try {
+      const { miaodaDevPlugin } = require("miaoda-sc-plugin");
+      plugins.push(miaodaDevPlugin());
+    } catch (error) {
+      console.warn('Miaoda dev plugin not available, continuing without it');
+    }
   }
 
   return {
