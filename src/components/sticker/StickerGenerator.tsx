@@ -27,7 +27,7 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
       setGenerating(true);
       
       // 如果用户输入了描述，先优化提示词
-      let finalPrompt = 'Turn the person or pet in the uploaded photo into a hilarious hand-drawn urgent delivery meme sticker. Style: Minimalist ugly-cute line drawing (doodle style) with a white background, rough hand-drawn texture. Expression: Exaggerate the subject\'s facial features to show extreme shock and anxiety, with wide-open eyes and an open mouth conveying the "why isn\'t it here yet" disbelief and impatience. Accessories: Add urgency-enhancing doodles around the subject\'s head, such as giant sweat drops, explosion symbols, dense question marks, and clocks or lightning bolts. Text: Add one random handwritten Chinese text from ["怎么还没好", "怎么还没到货", "什么时候到货", "快点啊", "抓紧", "我要马上到！"] at the bottom center; the text style must be messy, hasty, and visually impactful, accounting for no more than 1/5 of the total height.';
+      let finalPrompt = 'Turn the person or pet in the uploaded photo into a hilarious hand-drawn urgent delivery meme sticker. Style: Minimalist ugly-cute line drawing (doodle style) with a white background, rough hand-drawn texture. Expression: Exaggerate the subject\'s facial features to show extreme shock and anxiety, with wide-open eyes and an open mouth conveying the "why isn\'t it here yet" disbelief and impatience. Accessories: Add urgency-enhancing doodles around the subject\'s head, such as giant sweat drops, explosion symbols, dense question marks, and clocks or lightning bolts. Text: Add one random single Chinese character from ["急", "快", "等", "催", "到", "来"] at the bottom center; the text style must be messy, hasty, and visually impactful, accounting for no more than 1/5 of the total height.';
       let optimizedPromptText: string | null = null;
 
       if (description.trim()) {
@@ -77,7 +77,8 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
 
       const generatedBase64 = await generateSticker({
         imageBase64: base64,
-        mimeType
+        mimeType,
+        prompt: finalPrompt
       });
 
       setGeneratedImage(generatedBase64);
@@ -143,12 +144,7 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
             disabled={generating}
             className="min-h-[100px]"
           />
-          <div className="text-sm space-y-1.5 mt-3 p-3 bg-muted/50 rounded-md">
-            <p className="text-foreground">💡 <strong>催货风格</strong>：极简丑萌线条画，白色背景，粗糙手绘质感</p>
-            <p className="text-foreground">😱 <strong>情绪强化</strong>：极度震惊、崩溃、咆哮或生无可恋，表现"怎么还没到"的焦急感</p>
-            <p className="text-foreground">⚡ <strong>紧迫配饰</strong>：巨大汗滴、爆炸符号、密集问号、时钟/闪电</p>
-            <p className="text-foreground">📝 <strong>催货文案</strong>：怎么还没好/怎么还没到货/什么时候到货/快点啊/抓紧/我要马上到！</p>
-          </div>
+
         </div>
 
         {generatedImage ? (

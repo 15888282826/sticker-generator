@@ -4,7 +4,7 @@ const API_URL = 'https://api-integrations.appmiaoda.com/app-8uqvqoz8ynls/api-Xa6
 const APP_ID = import.meta.env.VITE_APP_ID;
 const TIMEOUT = 300000; // 300秒超时
 
-const DEFAULT_PROMPT = `Turn the people or pets in your photos into fun hand-drawn WeChat stickers. Style: Minimalist ugly-cute line drawing (doodle style). White background. Expression: Exaggerate the animal's expression to look extremely shocked/judgemental/lazy (based on photo). Accessories: Add cute little doodles like sweat drops, question marks, or sparkles around the head. Text: Add handwritten Chinese text at the bottom: '[搞快点 / 累了 / 暗中观察 / 咬牙切齿 / 哈哈哈哈哈 / 是心动的感觉 / 要命 / 比心 / 土狗贴贴 / 一切随缘]'. Ensure the text style is messy and funny.`;
+const DEFAULT_PROMPT = `Turn the person or pet in the uploaded photo into a single hilarious hand-drawn urgent delivery meme sticker. Style: Minimalist ugly-cute line drawing (doodle style) with a white background, rough hand-drawn texture. Expression: Exaggerate the subject's facial features to show extreme shock and anxiety, with wide-open eyes and an open mouth conveying the "why isn't it here yet" disbelief and impatience. Accessories: Add urgency-enhancing doodles around the subject's head, such as giant sweat drops, explosion symbols, dense question marks, and clocks or lightning bolts. Text: Add one random single Chinese character from ["急", "快", "等", "催", "到", "来"] at the bottom center; the text style must be messy, hasty, and visually impactful, accounting for no more than 1/5 of the total height. Generate only one sticker, not multiple stickers in a grid.`;
 
 export interface GenerateStickerRequest {
   imageBase64: string;
