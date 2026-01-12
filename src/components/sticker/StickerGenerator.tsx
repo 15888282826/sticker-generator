@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Sparkles, Download, Loader2, Wand2 } from 'lucide-react';
+import { Sparkles, Download, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -17,95 +17,47 @@ interface StickerGeneratorProps {
 
 export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }: StickerGeneratorProps) {
   const [generating, setGenerating] = useState(false);
-  const [optimizing, setOptimizing] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [stickerId, setStickerId] = useState<string | null>(null);
   const [description, setDescription] = useState('');
-  const [optimizedPromptText, setOptimizedPromptText] = useState('');
   const { toast } = useToast();
 
-  const handleOptimizePrompt = async () => {
-    if (!description.trim()) {
-      toast({
-        title: '请输入描述',
-        description: '请先输入图片描述，例如"一只可爱的猫咪"',
-        variant: 'destructive'
-      });
-      return;
-    }
-
-    try {
-      setOptimizing(true);
-      toast({
-        title: '正在优化',
-        description: 'AI正在优化您的提示词...'
-      });
-
-      const optimized = await optimizePrompt(description);
-      setOptimizedPromptText(optimized);
-
-      toast({
-        title: '优化成功',
-        description: '提示词已优化完成，可以开始生成表情包了'
-      });
-    } catch (error) {
-      console.error('优化失败:', error);
-      toast({
-        title: '优化失败',
-        description: error instanceof Error ? error.message : '请稍后重试',
-        variant: 'destructive'
-      });
-    } finally {
-      setOptimizing(false);
-    }
-  };
-
   const handleGenerate = async () => {
-    // 如果用户输入了描述但还没有优化，先自动优化
-    if (description.trim() && !optimizedPromptText) {
-      toast({
-        title: '正在优化提示词',
-        description: 'AI正在根据您的描述优化提示词...'
-      });
-      
-      try {
-        setOptimizing(true);
-        const optimized = await optimizePrompt(description);
-        setOptimizedPromptText(optimized);
-        
-        toast({
-          title: '优化完成',
-          description: '即将开始生成表情包'
-        });
-        
-        // 等待一下让用户看到优化结果
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // 使用优化后的提示词继续生成
-        await generateWithPrompt(optimized);
-      } catch (error) {
-        console.error('优化失败:', error);
-        toast({
-          title: '优化失败',
-          description: '将使用默认提示词生成',
-          variant: 'destructive'
-        });
-        // 优化失败，使用默认提示词
-        await generateWithPrompt(null);
-      } finally {
-        setOptimizing(false);
-      }
-    } else {
-      // 已经有优化后的提示词，或者没有输入描述，直接生成
-      await generateWithPrompt(optimizedPromptText);
-    }
-  };
-
-  const generateWithPrompt = async (promptText: string | null) => {
-    const finalPrompt = promptText || 'Turn the person or pet in the uploaded photo into a hilarious hand-drawn urgent delivery meme sticker. Style: Minimalist ugly-cute line drawing (doodle style) with a white background, rough hand-drawn texture. Expression: Exaggerate the subject\'s facial features to show extreme shock and anxiety, with wide-open eyes and an open mouth conveying the "why isn\'t it here yet" disbelief and impatience. Accessories: Add urgency-enhancing doodles around the subject\'s head, such as giant sweat drops, explosion symbols, dense question marks, and clocks or lightning bolts. Text: Add one random handwritten Chinese text from ["怎么还没好", "怎么还没到货", "什么时候到货", "快点啊", "抓紧", "我要马上到！"] at the bottom center; the text style must be messy, hasty, and visually impactful, accounting for no more than 1/5 of the total height.';
-
     try {
       setGenerating(true);
+      
+      // 如果用户输入了描述，先优化提示词
+      let finalPrompt = 'Turn the person or pet in the uploaded photo into a hilarious hand-drawn urgent delivery meme sticker. Style: Minimalist ugly-cute line drawing (doodle style) with a white background, rough hand-drawn texture. Expression: Exaggerate the subject\'s facial features to show extreme shock and anxiety, with wide-open eyes and an open mouth conveying the "why isn\'t it here yet" disbelief and impatience. Accessories: Add urgency-enhancing doodles around the subject\'s head, such as giant sweat drops, explosion symbols, dense question marks, and clocks or lightning bolts. Text: Add one random handwritten Chinese text from ["怎么还没好", "怎么还没到货", "什么时候到货", "快点啊", "抓紧", "我要马上到！"] at the bottom center; the text style must be messy, hasty, and visually impactful, accounting for no more than 1/5 of the total height.';
+      let optimizedPromptText: string | null = null;
+
+      if (description.trim()) {
+        toast({
+          title: '正在优化提示词',
+          description: 'AI正在根据您的描述优化提示词...'
+        });
+
+        try {
+          const optimized = await optimizePrompt(description);
+          finalPrompt = optimized;
+          optimizedPromptText = optimized;
+          
+          toast({
+            title: '优化完成',
+            description: '即将开始生成表情包'
+          });
+          
+          // 等待一下让用户看到优化结果
+          await new Promise(resolve => setTimeout(resolve, 800));
+        } catch (error) {
+          console.error('优化失败:', error);
+          toast({
+            title: '优化失败',
+            description: '将使用默认提示词生成',
+            variant: 'destructive'
+          });
+        }
+      }
+
       toast({
         title: '开始生成',
         description: '正在使用AI生成表情包，请耐心等待...'
@@ -120,7 +72,7 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
         original_image_url: originalImageUrl,
         prompt: finalPrompt,
         user_description: description || null,
-        optimized_prompt: promptText || null
+        optimized_prompt: optimizedPromptText
       });
 
       const generatedBase64 = await generateSticker({
@@ -188,7 +140,7 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
             placeholder="示例1：怎么还没到货啊&#10;示例2：快点啊，我等不及了&#10;示例3：什么时候到货"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            disabled={generating || optimizing}
+            disabled={generating}
             className="min-h-[100px]"
           />
           <div className="text-xs text-muted-foreground space-y-1">
@@ -196,44 +148,8 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
             <p>😱 <strong>情绪强化</strong>：极度震惊、崩溃、咆哮或生无可恋，表现"怎么还没到"的焦急感</p>
             <p>⚡ <strong>紧迫配饰</strong>：巨大汗滴、爆炸符号、密集问号、时钟/闪电</p>
             <p>📝 <strong>催货文案</strong>：怎么还没好/怎么还没到货/什么时候到货/快点啊/抓紧/我要马上到！</p>
-            {description.trim() && !optimizedPromptText && (
-              <p className="text-primary font-semibold">
-                ⚡ 提示：点击"生成表情包"时会自动优化您的描述
-              </p>
-            )}
-          </div>
-          <div className="flex gap-2">
-            <Button
-              onClick={handleOptimizePrompt}
-              disabled={!description.trim() || optimizing || generating}
-              variant="outline"
-              size="sm"
-              className="flex-1"
-            >
-              {optimizing ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  AI优化中...
-                </>
-              ) : (
-                <>
-                  <Wand2 className="mr-2 h-4 w-4" />
-                  AI优化提示词（可选）
-                </>
-              )}
-            </Button>
           </div>
         </div>
-
-        {/* 优化后的提示词显示 */}
-        {optimizedPromptText && (
-          <div className="space-y-2">
-            <Label>优化后的提示词（英文）</Label>
-            <div className="p-3 bg-muted rounded-lg text-sm max-h-32 overflow-y-auto">
-              {optimizedPromptText}
-            </div>
-          </div>
-        )}
 
         {generatedImage ? (
           <div className="space-y-4">
@@ -269,7 +185,7 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
             <div className="border-2 border-dashed border-border rounded-lg p-12 text-center">
               <Sparkles className="h-12 w-12 text-muted-foreground mx-auto mb-2" />
               <p className="text-sm text-muted-foreground">
-                {optimizedPromptText ? '提示词已优化，点击下方按钮开始生成' : '点击下方按钮开始生成'}
+                点击下方按钮开始生成
               </p>
             </div>
             <Button
