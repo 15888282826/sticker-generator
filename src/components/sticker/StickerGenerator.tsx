@@ -143,7 +143,7 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
             disabled={generating}
             className="min-h-[100px]"
           />
-          <div className="text-xs text-muted-foreground space-y-1">
+          <div className="text-xs text-muted-foreground space-y-1.5 mt-2">
             <p>💡 <strong>催货风格</strong>：极简丑萌线条画，白色背景，粗糙手绘质感</p>
             <p>😱 <strong>情绪强化</strong>：极度震惊、崩溃、咆哮或生无可恋，表现"怎么还没到"的焦急感</p>
             <p>⚡ <strong>紧迫配饰</strong>：巨大汗滴、爆炸符号、密集问号、时钟/闪电</p>
