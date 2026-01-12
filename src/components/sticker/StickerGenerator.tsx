@@ -143,11 +143,11 @@ export function StickerGenerator({ originalImageUrl, originalFile, onGenerated }
             disabled={generating}
             className="min-h-[100px]"
           />
-          <div className="text-xs text-muted-foreground space-y-1.5 mt-2">
-            <p>💡 <strong>催货风格</strong>：极简丑萌线条画，白色背景，粗糙手绘质感</p>
-            <p>😱 <strong>情绪强化</strong>：极度震惊、崩溃、咆哮或生无可恋，表现"怎么还没到"的焦急感</p>
-            <p>⚡ <strong>紧迫配饰</strong>：巨大汗滴、爆炸符号、密集问号、时钟/闪电</p>
-            <p>📝 <strong>催货文案</strong>：怎么还没好/怎么还没到货/什么时候到货/快点啊/抓紧/我要马上到！</p>
+          <div className="text-sm space-y-1.5 mt-3 p-3 bg-muted/50 rounded-md">
+            <p className="text-foreground">💡 <strong>催货风格</strong>：极简丑萌线条画，白色背景，粗糙手绘质感</p>
+            <p className="text-foreground">😱 <strong>情绪强化</strong>：极度震惊、崩溃、咆哮或生无可恋，表现"怎么还没到"的焦急感</p>
+            <p className="text-foreground">⚡ <strong>紧迫配饰</strong>：巨大汗滴、爆炸符号、密集问号、时钟/闪电</p>
+            <p className="text-foreground">📝 <strong>催货文案</strong>：怎么还没好/怎么还没到货/什么时候到货/快点啊/抓紧/我要马上到！</p>
           </div>
         </div>
 
